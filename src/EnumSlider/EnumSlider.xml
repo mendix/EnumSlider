@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<widget id="EnumSlider.widget.EnumSlider" needsEntityContext="true" xmlns="http://www.mendix.com/widget/1.0/">
+  <name>Enum slider</name>
+  <description>Enumeration slider.</description>
+
+  <icon>iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2Fy
+ZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAfZJREFUeNqMUs9rE0EU/mZ2sttfFloJ
+8SJ40ouItwiChx77H7TQHOwpPVW8JkL+gnhqbsEkUIjg3Z68eLM9lbb0UkXclmor
+bWOT7O7sjG8mzQqrNX3MxwzvvfnmzXsfazQaawCKGG21QqGw8pe3Xq/rMAxHwuSR
+IQ0hpbRE8fd3iH7u48fHdXS/dSE7lBAPHnn4+jOGeWnjJmCYvNw8Ju+vYOLuA6hY
+QikFTZBmp/h1BCKKIpvAxDSBGL0JqEiCKwdfTyWOLzUeUdzkXUtgTHU+4fLUh7+9
+h4vz2OLgRMHvKBv/L4GpYPftK5wd+/ii8lDPXtrg7BXa7Tay2SyazaZOT0ZQhy3B
+h9Z79Ombt5+vYmlhATexVqtVTCrYOXLRI4KnV81a3jgHGINHGHMIgsE1ZyHgcY4X
+eWEbmxCc9F2EmmFYES2aAkMEDqYMF7dN1nTuqYEGTG4yxjc7R1jfPUwIph2NqYzG
+ZEbBc2I49DqnyjLkd7lKCEQcx7VyuZxIOZfL2eC9W4ouc4yPuZgSHC59ISJljRsf
+d/4QVKtVo+9E45VKRRsRed0zMIejF7j4RbVTG2BGQC44tD+5M4MgCCDSnR1+YW3T
+x0UQoR9IhKRMK2vOoOmGl2FYfDw3qCBNMBTM1mp+5BhN7r8IaqVSqYibWe23AAMA
+WwlWhAsSTwAAAAAASUVORK5CYII=</icon>
+
+  <properties>
+    <property key="name" type="attribute">
+      <caption>Attribute</caption>
+      <category>Data source</category>
+      <description>The enumeration attribute.</description> 
+      <attributeTypes>
+        <attributeType name="Enum"/>
+      </attributeTypes>
+    </property>
+	<property key="includeEmpty" type="boolean" defaultValue="true">
+      <caption>Include empty</caption>
+      <category>Data source</category>
+      <description>Adds the enum '' value at the start.</description>
+    </property>
+	<property key="emptyCaption" type="string" required="false">
+      <caption>'Empty' caption</caption>
+      <category>Data source</category>
+      <description>The caption to show for the '' enum value.</description>
+    </property>
+	<property key="direction" type="enumeration" required="true" defaultValue="horizontal">
+	  <caption>Direction</caption>
+	  <category>Appearance</category>
+	  <description>The direction of the slider.</description>
+	  <enumerationValues>
+		  <enumerationValue key="horizontal">Horizontal</enumerationValue>
+		  <enumerationValue key="vertical">Vertical</enumerationValue>
+	  </enumerationValues>    
+	</property>
+	<property key="sliderWidth" type="integer" defaultValue="300">
+      <caption>Width</caption>
+      <category>Appearance</category>
+      <description>Maximum width of the slider in pixels.</description>
+    </property>
+	<property key="sliderHeight" type="integer" defaultValue="50">
+      <caption>Height</caption>
+      <category>Appearance</category>
+      <description>Maximum height of the slider in pixels.</description>
+    </property>
+    <property key="onchangemf" type="microflow" required="false">
+      <caption>On change microflow</caption>
+      <category>Behavior</category>
+      <description>A microflow to be executed on change.</description>
+	  <returnType type="Void"/>
+    </property>
+	<property key="enumExceptions" type="string" required="false">
+      <caption>Enum exceptions</caption>
+      <category>Data Source</category>
+      <description>A comma (,) separated list of enum keys that are to be excluded from the slider.</description>
+    </property>
+  </properties>
+</widget>
