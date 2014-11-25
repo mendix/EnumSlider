@@ -37,7 +37,7 @@ mendix.widget.declare('EnumSlider.widget.EnumSlider', {
 		if(meta && meta.getAttributeClass(this.name) == 'Enum') {
 			this.slideEnum = meta.getEnumMap(this.name);
 			var spliceList = [];
-			if (this.exceptions)
+			if (this.exceptions) {
 				for (var j = 0; j < this.exceptions.length; j++) {
 					var exception = this.exceptions[j].replace(/^ /gi, '');
 					for (var i = 0; i < this.slideEnum.length; i++) {
@@ -45,6 +45,9 @@ mendix.widget.declare('EnumSlider.widget.EnumSlider', {
 							spliceList.push(i);
 					}
 				}
+				// Sort slideEnum in order of slideEnum indexes
+				spliceList.sort(fucntion(a,b){return a-b});
+			}
 			for (var i = 0; i < spliceList.length; i++) {
 				this.slideEnum.splice(spliceList[i]-i, 1);
 			}
