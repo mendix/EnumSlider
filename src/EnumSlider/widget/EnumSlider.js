@@ -46,7 +46,7 @@ mendix.widget.declare('EnumSlider.widget.EnumSlider', {
 					}
 				}
 				// Sort slideEnum in order of slideEnum indexes
-				spliceList.sort(fucntion(a,b){return a-b});
+				spliceList.sort(function(a,b){return a-b});
 			}
 			for (var i = 0; i < spliceList.length; i++) {
 				this.slideEnum.splice(spliceList[i]-i, 1);
