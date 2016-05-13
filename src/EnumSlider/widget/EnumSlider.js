@@ -13,10 +13,13 @@ define([
 	"dojo/text",
 	"dojo/html",
 	"dojo/_base/event",
+	"dijit/form/VerticalRule",
+	"dijit/form/VerticalRuleLabels",
+	"dijit/form/VerticalSlider",
 	"dijit/form/HorizontalRule",
 	"dijit/form/HorizontalRuleLabels",
 	"dijit/form/HorizontalSlider"
-], function (declare, _WidgetBase, dom, dojoDom, dojoProp, dojoGeometry, dojoClass, dojoStyle, dojoConstruct, dojoArray, dojoLang, dojoText, dojoHtml, dojoEvent, horizontalRule, horizontalLabels, horizontalSlider) {
+], function (declare, _WidgetBase, dom, dojoDom, dojoProp, dojoGeometry, dojoClass, dojoStyle, dojoConstruct, dojoArray, dojoLang, dojoText, dojoHtml, dojoEvent, verticalRule, verticalLabels, verticalSlider, horizontalRule, horizontalLabels, horizontalSlider) {
 	"use strict";
 
 	return declare("EnumSlider.widget.EnumSlider", [_WidgetBase], {
@@ -130,7 +133,7 @@ define([
 						onBlur: dojo.hitch(this, this.execclick),
 						onChange: dojo.hitch(this, function (value) {
 							this.hasChanged = true;
-							this.onChange();
+							this.contextObj.set(this.name, this.slideEnum[value].key);
 						})
 					});
 
@@ -148,7 +151,7 @@ define([
 					this.slideEnum = this.slideEnum.reverse();
 					var flipped = enumArray.length - (this.currentNr + 1);
 
-					var sliderRuleLabels = new dijit.form.VerticalRuleLabels({
+					var sliderRuleLabels = new verticalLabels({
 						container: 'rightDecoration',
 						style: 'cursor: pointer',
 						labels: enumArray,
@@ -169,13 +172,13 @@ define([
 						})
 					}, dom.create('div'));
 
-					var sliderRule = new dijit.form.VerticalRule({
+					var sliderRule = new verticalRule({
 						count: enumcount,
 						container: 'rightDecoration',
 						style: 'width: 5px;'
 					}, dom.create('div'));
 
-					this.slider = new dijit.form.VerticalSlider({
+					this.slider = new verticalSlider({
 						name: "slider_widget",
 						value: flipped,
 						minimum: 0,
@@ -187,7 +190,7 @@ define([
 						onBlur: dojo.hitch(this, this.execclick),
 						onChange: dojo.hitch(this, function (value) {
 							this.hasChanged = true;
-							this.onChange();
+							this.contextObj.set(this.name, this.slideEnum[value].key);
 						})
 					});
 
@@ -244,17 +247,7 @@ define([
 				this.slider.attr('disabled', !!value);
 		},
 
-		_getValueAttr: function () {
-			if (this.slideEnum && this.slider)
-				return this.slideEnum[this.slider.attr('value')].key;
-			else
-				return '';
-		},
-
-		onChange: function () {
-		},
-
-		_setValueAttr: function (value) {
+		setValueAttr: function (value) {
 			if (this.slideEnum && this.slideEnum.length > 0 && this.slider.attr("value") != value)
 				for (var i = 0; i < this.slideEnum.length; i++)
 					if (this.slideEnum[i].key == value) {
@@ -270,9 +263,29 @@ define([
 
 			this.contextObj = obj;
 
+			this._resetSubscriptions();
+
 			callback();
 		},
-		
+
+		_resetSubscriptions: function () {
+			if (this.attrHandle) {
+				mx.data.unsubscribe(this.attrHandle);
+				this.attrHandle = null;
+			}
+
+			if (this.contextObj) {
+
+				this.attrHandle = this.subscribe({
+					guid: this.contextObj.getGuid(),
+					attr: this.name,
+					callback: dojoLang.hitch(this, function (guid, attr, attrValue) {
+						this.setValueAttr(attrValue);
+					})
+				});
+			}
+		},
+
 		resize: function () {
 			// needed for the mx6 client, notifies the widget when a resize happens, to stay responsive
 		},
